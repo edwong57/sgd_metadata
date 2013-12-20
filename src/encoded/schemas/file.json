@@ -4,7 +4,7 @@
     "id": "/profiles/file.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": ["dataset", "file_format", "md5sum", "output_type"],
+    "required": ["dataset", "file_format", "output_type"],
     "identifyingProperties": ["uuid","accession"],
     "additionalProperties": false,
     "mixinProperties": [
@@ -88,7 +88,7 @@
         },
         "assembly": {
             "title": "Mapping assembly",
-            "description": "UCSC genome assembly that files were mapped to.",
+            "description": "SGD genome assembly that files were mapped to.",
             "comment": "Applies for mapped files (e.g. BAM, BED and BigWig).",
             "type": "string",
             "enum": ["mm9", "hg19", "n/a"]

@@ -153,7 +153,7 @@
             }
         }
     },
-    "biosample_classification": {
+    "biosample_classification": { 
         "biosample_term_id": {
             "title": "Ontology ID",
             "description": "Ontology identifier describing biosample.",

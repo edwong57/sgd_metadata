@@ -5,26 +5,23 @@
     "id": "/profiles/experiment.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": ["references", "assay id"],
+    "required": ["references", "assay_term_id"],
     "calculated_props": ["organ_slims", "system_slims", "developmental_slims"],
-    "facets": [{"Assay": "assay_term_name"}, {"Organism": "replicates.library.biosample.organism.name"}, {"Organ": "organ_slims"}, {"Lab": "lab.title"}, {"Developmental Slim": "developmental_slims"}],
-    "approvalRequired": ["assay_term_id", "biosample_term_id", "biosample_type"],
+    "facets": [{"Assay": "assay_term_name"}, {"Organism": "organism.name"}, {"Target":"target"}],
+    "approvalRequired": ["assay_term_id"],
     "identifyingProperties": ["uuid", "accession" , "aliases"],
     "additionalProperties": false,
     "mixinProperties": [
         { "$ref": "mixins.json#/schema_version" },
         { "$ref": "mixins.json#/uuid" },
-        { "$ref": "mixins.json#/accession" },
-        { "$ref": "mixins.json#/biosample_classification" },
-        { "$ref": "mixins.json#/submitted" },
-        { "$ref": "mixins.json#/notes" }
-    ],
+        { "$ref": "mixins.json#/accession" }
+     ],
     "properties": {
         "schema_version": {
             "default": "1"
         },
         "accession": {
-            "accessionType": "SR"
+        	"accesssionType": "SR"
         },
         "description": {
             "title": "Description",
@@ -38,6 +35,19 @@
             "comment": "See target.json for available identifiers.",
             "type": "string",
             "linkTo": "target"
+        },
+        "biosample": {
+            "title": "Biosample",
+            "description": "Biosample that was used for the experiment.",
+            "comment": "See biosample.json for available identifiers.",
+            "type": "string",
+            "linkTo": "biosample"
+        },
+        "platform": {
+            "title": "Platform",
+            "comment": "See platform.json for available identifiers.",
+            "type": "string",
+            "linkTo": "platform"
         },
         "assay_term_name": {
             "title": "Assay name",
@@ -65,20 +75,7 @@
             "items": {
                 "title": "External source ID",
                 "type":  "string",
-                "pattern": "^(GSM|GSE|SRA|ArrayExpress):\\d+$"
-            }
-        },
-        "documents": {
-            "title": "Documents",
-            "description": "Protocols or other documents that describe the assay or the results (not data files).",
-            "type": "array",
-            "default": [],
-            "items": {
-                "title": "Document",
-                "description": "A protocol or other document that describes the assay or the results (not data files).",
-                "comment": "See document.json for a list of available identifiers.",
-                "type": "string",
-                "linkTo": "document"
+                "pattern": "^\\D+[0-9]+$"
             }
         },
         "files": {

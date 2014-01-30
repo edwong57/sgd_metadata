@@ -29,13 +29,6 @@
             "description": "The user's last (family) name.",
             "type": "string"
         },
-        "lab": {
-            "title": "Affiliation",
-            "description": "Lab user is primarily associated with.",
-            "comment": "See lab.json for available identifiers.",
-            "type": "string",
-            "linkTo": "lab"
-        },
         "submits_for": {
             "title": "Submits for",
             "description": "Labs user is authorized to submit data for.",

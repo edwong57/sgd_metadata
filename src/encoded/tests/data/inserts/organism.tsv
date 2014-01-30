@@ -1,8 +1,1 @@
-test	uuid	name	scientific_name	taxon_id
-test	7745b647-ff15-4ff3-9ced-b897d4e2983c	human	Homo sapiens	9606
-test	4f98fd6a-0e61-4988-9032-a5116f6d0607	rabbit	Oryctolagus cuniculus	9986
-test	3aa8d64b-dc44-48b5-926d-60ad2befebe7	rat	Rattus norvegicus	10116
-test	3413218c-3d86-498b-a0a2-9a406638e786	mouse	Mus musculus	10090
-test	2cfcb093-0619-4e52-b6d5-15779860dc49	sheep	Ovis aries	9940
-test	3e4d691d-49b0-40bd-9628-bb4f53d80980	goat	Capra hircus	9925
-test	c3aff9e7-8460-44b7-8cc2-ed9cade08ead	chicken	Gallus gallus	9031
+test	uuid	name	scientific_name	taxon_idtest	b192aaf8-44ed-4ecf-8bfd-c12143dd0d65	BY4741	Saccharomyces cerevisiae	1247190test	2cce154a-5ca8-43ad-bbe9-608924ebbc32	S288C-S96	Saccharomyces cerevisiae	21test	ed9fe9a0-a2fc-4516-8c3b-f41d9b641523	W101	Saccharomyces cerevisiae	4932test	74ca11f0-9024-486b-bb93-1fdfb55d4fdc	W303	Saccharomyces cerevisiae	580240test	c51f807e-3b94-4638-911d-62dde942722c	S288C-BY4741	Saccharomyces cerevisiae	22test	626f1662-7cfd-4419-af50-633b822359b9	BY4742	Saccharomyces cerevisiae	1247191test	3779d06a-0619-4d2a-9aa4-d06d8ca95fab	S288C	Saccharomyces cerevisiae	559292test	2ba78964-d440-4604-9b95-7a1dda31d5a2	SK1	Saccharomyces cerevisiae	580239test	bc3e8d56-1aab-4d64-8842-3a5774745346	YJM789	Saccharomyces cerevisiae	307796test	2b3c414f-c668-4549-8eeb-9bd88615d7a3	RM11	Saccharomyces cerevisiae	285006test	929317f1-b5f0-4b3b-8223-ddffdcf3df2c	OAy470	Saccharomyces cerevisiae	1111111test	b9d18c02-d04f-4eee-9071-eb8836f46a1c	W303-1A	Saccharomyces cerevisiae	5802401test	45a70120-a6bb-4a18-9306-4ebf1381ed6f	S288C-YJM789	Saccharomyces cerevisiae	1418121test	45a70121-a6bb-4a18-9306-4ebf1381ed6f	S288C-SK1	Saccharomyces cerevisiae	20

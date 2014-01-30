@@ -10,7 +10,7 @@ ENCODE Metadata Database
 
 First install dependencies::
 
-    $ brew install libxml2 libxslt freetype openssl libjpeg libmagic postgresql
+    $ brew install libxml2 libxslt freetype openssl libjpeg libmagic postgresql elasticsearch
 
 Note: The default Mac python doesn't work. You should install Python with Homebrew::
 

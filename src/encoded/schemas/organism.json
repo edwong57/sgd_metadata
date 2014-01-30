@@ -8,8 +8,7 @@
     "additionalProperties": false,
     "mixinProperties": [
         { "$ref": "mixins.json#/schema_version" },
-        { "$ref": "mixins.json#/uuid" },
-        { "$ref": "mixins.json#/standard_status" }
+        { "$ref": "mixins.json#/uuid" }
     ],
     "properties": {
         "schema_version": {
@@ -17,9 +16,8 @@
         },
         "name": {
             "title": "Common name",
-            "description": "A short unique name for the organism (e.g. 'mouse' or 'human').",
-            "type": "string",
-            "pattern": "^[a-z\\-]+$"
+            "description": "A short unique name for the strain (e.g. 'S288C' or 'W303').",
+            "type": "string"
         },
         "scientific_name": {
             "title": "Binomial name",
@@ -27,9 +25,9 @@
             "type": "string",
             "default": ""
         },
-        "taxon_id": {
+          "taxon_id": {
             "title": "Taxon ID",
-            "description": "The NCBI taxon ID for the organism (e.g. 10090).",
+            "description": "The NCBI taxon ID for the strain (e.g. 10090).",
             "type": "string",
             "format": "^[0-9]+$"
         }

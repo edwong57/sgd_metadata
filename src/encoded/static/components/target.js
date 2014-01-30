@@ -13,14 +13,14 @@ var Panel = module.exports.Panel = React.createClass({
         var itemClass = globals.itemClass(context, 'view-detail panel key-value');
         var geneLink;
 
-        if (context.organism.name == "human") {
-            geneLink = globals.dbxref_prefix_map.HGNC + context.gene_name;
-        } else if (context.organism.name == "mouse") {
-            var uniProtValue = JSON.stringify(context.dbxref);
-            var sep = uniProtValue.indexOf(":") + 1;
-            var uniProtID = uniProtValue.substring(sep, uniProtValue.length - 2);
+//         if (context.organism.name == "human") {
+//             geneLink = globals.dbxref_prefix_map.HGNC + context.gene_name;
+//         } else if (context.organism.name == "mouse") {
+//             var uniProtValue = JSON.stringify(context.dbxref);
+//             var sep = uniProtValue.indexOf(":") + 1;
+//             var uniProtID = uniProtValue.substring(sep, uniProtValue.length - 2);
             geneLink = globals.dbxref_prefix_map.UniProtKB + uniProtID;
-        }
+//         }
         return (
             <dl className={itemClass}>
                 <dt>Target name</dt>

@@ -72,15 +72,15 @@ var Dbxref = dbxref.Dbxref;
                         <div>
                             <span className="pull-right type">Experiment: {' ' + result['accession']}</span>
                             <div className="accession">
-                                <a href={result['@id']}>{result['assay_term_name']+ ' of ' + result['biosample_term_name']}</a> 
+                                <a href={result['@id']}>{result['assay_term_name']+ ' of ' + result['biosample.biosample_term_name']}</a> 
                             </div>
                         </div>
                         <div className="data-row">
                             {result['target.label'] ? <strong>{columns['target.label'] + ': '}</strong>: null}
                             {result['target.label'] ? result['target.label'] : null}
                             {result['target.label'] ? <br /> : null}
-                            <strong>{columns['lab.title']}</strong>: {result['lab.title']}<br />
-                            <strong>{columns['award.rfa']}</strong>: {result['award.rfa']}
+                            {result['description'] ? <strong>'Description'</strong>: result['description'] <br />: null}
+                            {result['references'] ? <strong>'References'</strong>: result['references']}
                         </div>
                 </li>
             );

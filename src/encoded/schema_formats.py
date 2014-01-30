@@ -8,8 +8,8 @@ from .server_defaults import (
 )
 from uuid import UUID
 
-accession_re = re.compile(r'^ENC(FF|SR|AB|BS|DO|LB)[0-9][0-9][0-9][A-Z][A-Z][A-Z]$')
-test_accession_re = re.compile(r'^TST(FF|SR|AB|BS|DO|LB)[0-9][0-9][0-9][0-9][0-9][0-9]$')
+accession_re = re.compile(r'^SGD(FF|SR|AB|BS|DO|LB)[0-9][0-9][0-9][A-Z][A-Z][A-Z]$')
+test_accession_re = re.compile(r'^SGD(FF|SR|AB|BS|DO|LB)[0-9][0-9][0-9][0-9][0-9][0-9]$')
 uuid_re = re.compile(r'(?i)\{?(?:[0-9a-f]{4}-?){8}\}?')
 
 @FormatChecker.cls_checks("uuid")
@@ -52,7 +52,7 @@ def is_target_label(instance):
         #note this always returns true
         return True
     mod_histone_patt = "^H([234]|2A|2B)[KRT][0-9]+(me|ac|ph)"
-    fusion_patt = "^(eGFP|HA)-"
+    fusion_patt = "^(eGFP|HA|TAP|MYC)"
     oneoff_patts = "^(Control|Methylcytidine|POLR2Aphospho[ST][0-9+])$"
     if not re.match(mod_histone_patt, instance) or \
        not re.match(fusion_patt, instance) or \

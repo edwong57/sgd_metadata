@@ -45,13 +45,13 @@
     },
     "aliases": {
         "aliases": {
-            "title": "Lab aliases",
-            "description": "Lab specific identifiers to reference an object.",
+            "title": "SGD aliases",
+            "description": "SGD specific identifiers to reference an object.",
             "type": "array",
             "default": [],
             "items": {
-                "title": "Lab alias",
-                "description": "A lab specific identifier to reference an object.",
+                "title": "SGD alias",
+                "description": "An SGD specific identifier to reference an object.",
                 "comment": "Current convention is colon separated lab name and lab identifier. (e.g. john-doe:42).",
                 "type":  "string",
                 "pattern": "^\\S+:\\S+"
@@ -97,13 +97,6 @@
             "comment": "See lab.json for list of available identifiers.",
             "type": "string",
             "linkTo": "lab"
-        },
-        "award": {
-            "title": "Grant",
-            "description": "Grant associated with the submission.",
-            "comment": "See award.json for list of available identifiers.",
-            "type": "string",
-            "linkTo": "award"
         }
      },
      "attachment": {
@@ -159,7 +152,7 @@
             "description": "Ontology identifier describing biosample.",
             "comment": "NTR is a new term request identifier provided by the DCC.",
             "type": "string",
-            "pattern": "^(UBERON|EFO|BTO|CL|AMAD|NTR):[0-9]{2,8}$"
+            "pattern": "^(EFO|BTO|CL|AMAD|NTR|SO):[0-9]{2,8}$"
         },
         "biosample_term_name": {
             "title": "Ontology term",
@@ -171,11 +164,9 @@
             "description": "The categorization of the biosample.",
             "type": "string",
             "enum" : [
-                "primary cell line",
-                "immortalized cell line",
-                "tissue",
-                "in vitro differentiated cells",
-                "induced pluripotent stem cell line"
+            	"nucleic acid",
+            	"subcellular fractionation",
+                "whole cell culture"
             ]
         }
     },

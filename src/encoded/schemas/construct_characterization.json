@@ -4,7 +4,7 @@
     "id": "/profiles/construct_characterization.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": [ "award", "lab", "characterizes"],
+    "required": ["characterizes"],
     "identifyingProperties": ["uuid", "aliases"],
     "additionalProperties": false,
     "mixinProperties": [
@@ -12,8 +12,6 @@
         { "$ref": "mixins.json#/uuid" },
         { "$ref": "mixins.json#/aliases" },
         { "$ref": "mixins.json#/attachment" },
-        { "$ref": "mixins.json#/attribution" },
-        { "$ref": "mixins.json#/submitted" },
         { "$ref": "characterization.json#/properties" },
         { "$ref": "mixins.json#/notes" }
     ],

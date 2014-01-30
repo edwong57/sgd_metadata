@@ -6,31 +6,31 @@ logger = logging.getLogger('encoded')
 logger.setLevel(logging.INFO)  # doesn't work to shut off sqla INFO
 
 ORDER = [
-    'user',
-    'award',
-    'lab',
-    'organism',
-    'source',
-    'target',
-    'antibody_lot',
-    'antibody_characterization',
-    'antibody_approval',
-    'mouse_donor',
-    'human_donor',
-    'document',
-    'treatment',
-    'construct',
-    'construct_characterization',
-    'rnai',
-    'rnai_characterization',
+#    'user',
+#     'award',
+#     'lab',
+    'organism',  ## modified json and test file for yeast strains ###   
+#    'source',  ## modified json and test file ##
+    'target',   ### modified json and test file; removed 'organism' requirement, maybe add that back when we use it ##
+#     'antibody_lot',
+#     'antibody_characterization',
+#     'antibody_approval',
+#     'mouse_donor',
+#     'human_donor',
+#     'document',
+      'treatment',  ## kept in biosample object ## 
+      'construct',  ## kept in biosample object##
+#     'construct_characterization',
+#     'rnai',
+#     'rnai_characterization',
     'biosample',
-    'biosample_characterization',
-    'platform',
-    'library',
-    'experiment',
+#    'biosample_characterization',
+    'platform', ### modified json and test file; removed 'encode_dbxrefs' and changed geo_dbxref to dbxrefs for external dbxrefs 
+     'library',
+    'experiment',  ### modified json, test file, views, js  ##
     'replicate',
     # 'software',
-    'file',
+#    'file',  ### modified json and test file ###
     # 'dataset',
 ]
 
@@ -81,6 +81,7 @@ def skip_rows_missing_all_keys(*keys):
         for row in dictrows:
             if not any(key in row for key in keys):
                 row['_skip'] = True
+             #   logger.warn('skip - missing keys for %r expected for %r', row, keys)
             yield row
 
     return component
@@ -91,6 +92,7 @@ def skip_rows_with_all_key_value(**kw):
         for row in dictrows:
             if all(row[k] == v if k in row else False for k, v in kw.iteritems()):
                 row['_skip'] = True
+                logger.warn('skip - all key value')
             yield row
 
     return component
@@ -101,6 +103,7 @@ def skip_rows_without_all_key_value(**kw):
         for row in dictrows:
             if not all(row[k] == v if k in row else False for k, v in kw.iteritems()):
                 row['_skip'] = True
+       #         logger.warn('skip - row without all key value')
             yield row
 
     return component
@@ -121,6 +124,7 @@ def skip_rows_with_all_falsey_value(*keys):
         for row in dictrows:
             if all(not row[key] if key in row else False for key in keys):
                 row['_skip'] = True
+         #       logger.warn('skip - row with all falsey value')
             yield row
 
     return component
@@ -469,12 +473,12 @@ PHASE2_PIPELINES = {
     'user': [
         skip_rows_missing_all_keys('lab', 'submits_for'),
     ],
-    'biosample': [
-        skip_rows_missing_all_keys('derived_from', 'pooled_from'),
-    ],
-    'experiment': [
-        skip_rows_missing_all_keys('files', 'possible_controls'),
-    ],
+#     'biosample': [
+#         skip_rows_missing_all_keys('derived_from', 'pooled_from'),
+#     ],
+ #   'experiment': [
+ #       skip_rows_missing_all_keys('files', 'possible_controls'),
+ #   ],
 }
 
 

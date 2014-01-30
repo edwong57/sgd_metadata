@@ -26,27 +26,27 @@ var Experiment = module.exports.Experiment = React.createClass({
         var replicates = _.sortBy(context.replicates, function(item) {
             return item.biological_replicate_number;
         });
-        var documents = {};
-        replicates.forEach(function (replicate) {
-            if (!replicate.library) return;
-            replicate.library.documents.forEach(function (doc) {
-                documents[doc['@id']] = Panel({context: doc});
-            });
-        })
-        // Adding experiment specific documents
-        context.documents.forEach(function (document) {
-            documents[document['@id']] = Panel({context: document})
-        });
-        var antibodies = {};
-        replicates.forEach(function (replicate) {
-            if (replicate.antibody) {
-                antibodies[replicate.antibody['@id']] = replicate.antibody;
-            }
-        });
-        var antibody_accessions = []
-        for (var key in antibodies) {
-            antibody_accessions.push(antibodies[key].accession);
-        }
+  //       var documents = {};
+//         replicates.forEach(function (replicate) {
+//             if (!replicate.library) return;
+//             replicate.library.documents.forEach(function (doc) {
+//                 documents[doc['@id']] = Panel({context: doc});
+//             });
+//         })
+//         // Adding experiment specific documents
+//         context.documents.forEach(function (document) {
+//             documents[document['@id']] = Panel({context: document})
+//         });
+//         var antibodies = {};
+//         replicates.forEach(function (replicate) {
+//             if (replicate.antibody) {
+//                 antibodies[replicate.antibody['@id']] = replicate.antibody;
+//             }
+//         });
+         var antibody_accessions = []
+//         for (var key in antibodies) {
+//            antibody_accessions.push(antibodies[key].accession);
+//        }
         // XXX This makes no sense.
         //var control = context.possible_controls[0];
         return (
@@ -95,29 +95,16 @@ var Experiment = module.exports.Experiment = React.createClass({
                                 </ul>
                         </dd>
 
-                        <dt hidden={!context.encode2_dbxrefs.length}>ENCODE2 ID</dt>
-                        <dd hidden={!context.encode2_dbxrefs.length} className="no-cap">
-                            <DbxrefList values={context.encode2_dbxrefs} prefix="ENCODE2" />
+                        <dt hidden={!context.dbxrefs.length}>External ID</dt>
+                        <dd hidden={!context.dbxrefs.length} className="no-cap">
+                            <DbxrefList values={context.dbxrefs} prefix="External" />
                         </dd>
 
-                        <dt>Lab</dt>
-                        <dd>{context.lab.title}</dd>
 
-                        <dt hidden={!context.aliases.length}>Aliases</dt>
-                        <dd className="no-cap" hidden={!context.aliases.length}>{context.aliases.join(", ")}</dd>
-
-                        <dt>Project</dt>
-                        <dd>{context.award.rfa}</dd>
+//                        <dt hidden={!context.aliases.length}>Aliases</dt>
+ //                       <dd className="no-cap" hidden={!context.aliases.length}>{context.aliases.join(", ")}</dd>
 
                     </dl>
-                </div>
-
-                <BiosamplesUsed replicates={replicates} />
-                <AssayDetails replicates={replicates} />
-
-                <div hidden={!Object.keys(documents).length}>
-                    <h3>Protocols</h3>
-                    {documents}
                 </div>
 
                 {replicates.map(function (replicate, index) {
@@ -132,14 +119,22 @@ var Experiment = module.exports.Experiment = React.createClass({
     }
 });
 
+//                 <BiosamplesUsed replicates={context} />
+//                 <AssayDetails replicates={replicates} />
+// 
+//                 <div hidden={!Object.keys(documents).length}>
+//                     <h3>Protocols</h3>
+//                     {documents}
+//                 </div>
+
 globals.content_views.register(Experiment, 'experiment');
 
 var BiosamplesUsed = module.exports.BiosamplesUsed = function (props) {
-    var replicates = props.replicates;
-    if (!replicates.length) return (<div hidden={true}></div>);
+     var replicates = props.replicates;
+     if (!replicates.length) return (<div hidden={true}></div>);
     var biosamples = {};
-    replicates.forEach(function(replicate) {
-        var biosample = replicate.library && replicate.library.biosample;
+     replicates.forEach(function(replicate) {
+        var biosample = replicate.biosample // replicate.library && replicate.library.biosample;
         if (biosample) {
             biosamples[biosample['@id']] = { biosample: biosample, brn: replicate.biological_replicate_number };
         };
@@ -154,8 +149,8 @@ var BiosamplesUsed = module.exports.BiosamplesUsed = function (props) {
                         <th>Biosample</th>
                         <th>Type</th>
                         <th>Species</th>
-                        <th>Source</th>
-                        <th>Submitter</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -167,9 +162,9 @@ var BiosamplesUsed = module.exports.BiosamplesUsed = function (props) {
                             <td><a href={biosample['@id']}>{biosample.accession}</a></td>
                             <td>{biosample.biosample_term_name}</td>
                             <td>{biosample.biosample_type}</td>
-                            <td>{biosample.donor.organism.name}</td>
-                            <td>{biosample.source.title}</td>
-                            <td>{biosample.submitted_by.title}</td>
+                            <td>{biosample.organism.name}</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     );
                 })}
@@ -182,77 +177,77 @@ var BiosamplesUsed = module.exports.BiosamplesUsed = function (props) {
             </table>
         </div>
     );
-};
+ };
 
 
-var AssayDetails = module.exports.AssayDetails = function (props) {
-    var replicates = props.replicates.sort(function(a, b) {
-        if (b.biological_replicate_number === a.biological_replicate_number) {
-            return a.technical_replicate_number - b.technical_replicate_number;
-        }
-        return a.biological_replicate_number - b.biological_replicate_number;
-    });
-    if (!replicates.length) return (<div hidden={true}></div>);
-    var replicate = replicates[0];
-    var library = replicate.library;
-    var platform = replicate.platform;
-    var titles = {
-        nucleic_acid_term_name: 'Nucleic acid type',
-        nucleic_acid_starting_quantity: 'NA starting quantity',
-        lysis_method: 'Lysis method',
-        extraction_method: 'Extraction method',
-        fragmentation_method: 'Fragmentation method',
-        size_range: 'Size range',
-        library_size_selection_method: 'Size selection method',
-    };
-    var children = [];
-    if (library) {
-        for (var name in titles) {
-            if (library[name]) {
-                children.push(<dt key={'dt-' + name}>{titles[name]}</dt>);
-                children.push(<dd key={'dd-' + name}>{library[name]}</dd>);
-            }
-        }
-    }
-    if (typeof(platform) != 'undefined' && platform.title) {
-        children.push(<dt key="dt-platform">Platform</dt>);
-        children.push(<dd key="dd-platform"><a href={platform['@id']}>{platform.title}</a></dd>);
-    }
-    return (
-        <div>
-            <h3>Assay details</h3>
-            <dl className="panel key-value">
-                {children}
-            </dl>
-        </div>
-    );
-};
+// var AssayDetails = module.exports.AssayDetails = function (props) {
+//     var replicates = props.replicates.sort(function(a, b) {
+//         if (b.biological_replicate_number === a.biological_replicate_number) {
+//             return a.technical_replicate_number - b.technical_replicate_number;
+//         }
+//         return a.biological_replicate_number - b.biological_replicate_number;
+//     });
+//     if (!replicates.length) return (<div hidden={true}></div>);
+//     var replicate = replicates[0];
+//     var library = replicate.library;
+//     var platform = replicate.platform;
+//     var titles = {
+//         nucleic_acid_term_name: 'Nucleic acid type',
+//         nucleic_acid_starting_quantity: 'NA starting quantity',
+//         lysis_method: 'Lysis method',
+//         extraction_method: 'Extraction method',
+//         fragmentation_method: 'Fragmentation method',
+//         size_range: 'Size range',
+//         library_size_selection_method: 'Size selection method',
+//     };
+//     var children = [];
+//     if (library) {
+//         for (var name in titles) {
+//             if (library[name]) {
+//                 children.push(<dt key={'dt-' + name}>{titles[name]}</dt>);
+//                 children.push(<dd key={'dd-' + name}>{library[name]}</dd>);
+//             }
+//         }
+//     }
+//     if (typeof(platform) != 'undefined' && platform.title) {
+//         children.push(<dt key="dt-platform">Platform</dt>);
+//         children.push(<dd key="dd-platform"><a href={platform['@id']}>{platform.title}</a></dd>);
+//     }
+//     return (
+//         <div>
+//             <h3>Assay details</h3>
+//             <dl className="panel key-value">
+//                 {children}
+//             </dl>
+//         </div>
+//     );
+// };
 
 
-var Replicate = module.exports.Replicate = function (props) {
-    var replicate = props.replicate;
-    var library = replicate.library;
-    var biosample = library && library.biosample;
-    return (
-        <div key={props.key}>
-            <h3>Biological replicate - {replicate.biological_replicate_number}</h3>
-            <dl className="panel key-value">
-                <dt>Technical replicate</dt>
-                <dd>{replicate.technical_replicate_number}</dd>
-
-                {library ? <dt>Library</dt> : null}
-                {library ? <dd>{library.accession}</dd> : null}
-
-                {biosample ? <dt>Biosample</dt> : null}
-                {biosample ? <dd>
-                    <a href={biosample['@id']}>
-                        {biosample.accession}
-                    </a>{' '}-{' '}{biosample.biosample_term_name}
-                </dd> : null}
-            </dl>
-        </div>
-    );
-};
+// var Replicate = module.exports.Replicate = function (props) {
+//     var replicate = props.replicate;
+//     var library = replicate.library;
+//     var biosample = library && library.biosample;
+//     return (
+//         <div key={props.key}>
+//             <h3>Biological replicate - {replicate.biological_replicate_number}</h3>
+//             <dl className="panel key-value">
+//                 <dt>Technical replicate</dt>
+//                 <dd>{replicate.technical_replicate_number}</dd>
+// 
+//                 {library ? <dt>Library</dt> : null}
+//                 {library ? <dd>{library.accession}</dd> : null}
+// 
+//                 {biosample ? <dt>Biosample</dt> : null}
+//                 {biosample ? <dd>
+//                     <a href={biosample['@id']}>
+//                         {biosample.accession}
+//                     </a>{' '}-{' '}{biosample.biosample_term_name}
+//                 </dd> : null}
+//             </dl>
+//         </div>
+//     );
+// };
 
 // Can't be a proper panel as the control must be passed in.
 //globals.panel_views.register(Replicate, 'replicate');
@@ -261,45 +256,48 @@ var Replicate = module.exports.Replicate = function (props) {
 var FilesLinked = module.exports.FilesLinked = function (props) {
     var context = props.context;
     var files = context.files;
-    if (!files.length) return (<div hidden={true}></div>);
-    return (
-        <div>
-            <h3>Files linked to {context.accession}</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Accession</th>
-                        <th>File type</th>
-                        <th>Associated replicates</th>
-                        <th>Added by</th>
-                        <th>Date added</th>
-                        <th>File download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {files.map(function (file, index) {
-                    var href = 'http://encodedcc.sdsc.edu/warehouse/' + file.download_path;
-                    return (
-                        <tr key={index}>
-                            <td>{file.accession}</td>
-                            <td>{file.file_format}</td>
-                            <td>{file.replicate ?
-                                '(' + file.replicate.biological_replicate_number + ', ' + file.replicate.technical_replicate_number + ')'
-                                : null}
-                            </td>
-                            <td>{file.submitted_by.title}</td>
-                            <td>{file.date_created}</td>
-                            <td><a href={href} download><i className="icon-download-alt"></i> Download</a></td>
-                        </tr>
-                    );
-                })}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colSpan="6"></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    );
+    
+    return(<div><h3>Files:</h3>{files.length}</div>);
+ //    if (!files.length) return (<div hidden={true}></div>);
+//     
+//     return (
+//         <div>
+//             <h3>Files linked to {context.accession}</h3>
+//             <table>
+//                 <thead>
+//                     <tr>
+//                         <th>Accession</th>
+//                         <th>File type</th>
+//                         <th>Associated replicates</th>
+//                         <th>Added by</th>
+//                         <th>Date added</th>
+//                         <th>File download</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                 {files.map(function (file, index) {
+//                     var href = 'http://http://downloads.yeastgenome.org/published_datasets/' + file.download_path;
+//                     return (
+//                         <tr key={index}>
+//                             <td>{file.accession}</td>
+//                             <td>{file.file_format}</td>
+//                             <td>{file.replicate ?
+//                                 '(' + file.replicate.biological_replicate_number + ', ' + file.replicate.technical_replicate_number + ')'
+//                                 : null}
+//                             </td>
+//                             <td>{file.submitted_by.title}</td>
+//                             <td>{file.date_created}</td>
+//                             <td><a href={href} download><i className="icon-download-alt"></i> Download</a></td>
+//                         </tr>
+//                     );
+//                 })}
+//                 </tbody>
+//                 <tfoot>
+//                     <tr>
+//                         <td colSpan="6"></td>
+//                     </tr>
+//                 </tfoot>
+//             </table>
+//         </div>
+//     );
 };

@@ -11,7 +11,6 @@
         { "$ref": "mixins.json#/schema_version" },
         { "$ref": "mixins.json#/uuid" },
         { "$ref": "mixins.json#/accession" },
-        { "$ref": "mixins.json#/submitted" },
         { "$ref": "mixins.json#/notes" }
     ],
     "properties": {
@@ -45,7 +44,8 @@
                 "fastq",
                 "gtf",
                 "narrowPeak",
-                "narrowPeak.bigBed"
+                "narrowPeak.bigBed",
+                "gff3"
             ]
         },
         "md5sum": {
@@ -62,7 +62,8 @@
                 "rawData",
                 "peaks",
                 "alignments",
-                "signal"
+                "signal",
+                "processed"
             ]
         },
         "dataset": {
@@ -71,27 +72,6 @@
             "comment": "For experiments, see experiment.json for available identifiers. For datasets, see dataset.json for available identifiers.",
             "type": "string",
             "linkTo": ["experiment", "dataset"]
-        },
-        "replicate": {
-            "title": "Replicate",
-            "description": "The experimental replicate designation for the file.",
-            "comment": "See replicate.json for available identifiers.",
-            "type": "string",
-            "linkTo": "replicate"
-        },
-        "software": {
-            "title": "Software",
-            "description": "The software and parameters used to generate the file.",
-            "comment": " See software.json for available identifiers. Do not submit, value is not valid for primary data files like FastQ. ",
-            "type": "string",
-            "XXXlinkTo": "software"
-        },
-        "assembly": {
-            "title": "Mapping assembly",
-            "description": "SGD genome assembly that files were mapped to.",
-            "comment": "Applies for mapped files (e.g. BAM, BED and BigWig).",
-            "type": "string",
-            "enum": ["mm9", "hg19", "n/a"]
         },
         "submitted_file_name": {
             "title": "Original file name",
@@ -102,15 +82,6 @@
             "title": "Download URL",
             "comment": "The file resource locater.",
             "type": "string"
-        },
-        "status": {
-            "title": "Status",
-            "type": "string",
-            "default": "CURRENT",
-            "enum" : [
-                "CURRENT",
-                "OBSOLETE"
-            ]
         }
     }
 }

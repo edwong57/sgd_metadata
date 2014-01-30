@@ -5,7 +5,7 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "XXXcomment": "is source required?",
-    "required": [ "award", "lab", "nucleic_acid_term_id"],
+    "required": ["nucleic_acid_term_id"],
     "identifyingProperties": ["uuid","accession", "aliases"],
     "additionalProperties": false,
     "mixinProperties": [
@@ -13,10 +13,7 @@
         { "$ref": "mixins.json#/uuid" },
         { "$ref": "mixins.json#/accession" },
         { "$ref": "mixins.json#/aliases" },
-        { "$ref": "mixins.json#/attribution" },
         { "$ref": "mixins.json#/standard_status" },
-        { "$ref": "mixins.json#/submitted" },
-        { "$ref": "mixins.json#/source" },
         { "$ref": "mixins.json#/product_id" },
         { "$ref": "mixins.json#/lot_id" },
         { "$ref": "mixins.json#/notes" }
